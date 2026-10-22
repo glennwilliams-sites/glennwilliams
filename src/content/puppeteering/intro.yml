@@ -1,0 +1,18 @@
+show: true
+eyebrow: The craft
+heading: From ventriloquism to animatronics
+photo:
+  image: /src/assets/images/puppeteering/typical-day-at-the-office.jpg
+  alt: Glenn lying hidden under a wooden set platform while puppeteering
+  title: ""
+  description: ""
+  focus: center
+body: |-
+  <p>Glenn began as a ventriloquist, and has worked with every one of these types of puppet for many years, on film, television and commercial sets.</p>
+points:
+  - Ventriloquist figures
+  - Hand-and-rod puppets, in the Muppet style
+  - Rod puppets, moved by metal rods on the head and limbs
+  - Marionettes, or string puppets, often worked from above
+  - Animatronics, remote-controlled so the puppeteer stays out of shot
+  - Body and costume puppets, sometimes worked by a whole team

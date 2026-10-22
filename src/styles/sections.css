@@ -1,0 +1,7 @@
+/* Sections: flat bands on deep teal or teal. Slanted edges belong to PageHero only. */
+.section { position: relative; background: var(--tone); color: var(--text); padding: var(--section-pad) var(--gutter); }
+.tone-deep { --tone: var(--teal-deep); }
+.tone-teal { --tone: var(--teal); }
+.section-inner { margin: 0 auto; max-width: var(--wide); }
+.section-inner.prose { max-width: var(--prose); }
+.section > .section-inner > h2 { font-size: var(--size-h2); margin: 0 0 32px; }

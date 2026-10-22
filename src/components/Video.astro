@@ -1,0 +1,53 @@
+---
+import { Picture } from 'astro:assets';
+import Icon from './Icon.astro';
+import type { Video } from '../lib/schemas';
+import { resolveImage } from '../lib/images';
+import { embedUrl, parseVideoUrl, watchUrl, youtubeThumbnail } from '../lib/video';
+
+interface Props {
+  video: Video;
+}
+const { video } = Astro.props;
+const parsed = parseVideoUrl(video.url);
+const thumbnail = resolveImage(video.thumbnail);
+const label = video.title || 'video';
+---
+{parsed && (
+  <div class="video" data-embed={embedUrl(parsed, video.start)} data-title={label}>
+    <a class="video-poster" href={watchUrl(parsed, video.start)}>
+      {thumbnail ? (
+        <Picture src={thumbnail} alt="" widths={[480, 960]} sizes="(min-width: 960px) 960px, 100vw" formats={['avif', 'webp']} class="video-thumb video-thumb-local" />
+      ) : parsed.provider === 'youtube' ? (
+        <img src={youtubeThumbnail(parsed.id)} alt="" width="480" height="360" loading="lazy" class="video-thumb" />
+      ) : (
+        <span class="video-thumb video-thumb-blank">{label}</span>
+      )}
+      <span class="video-play" aria-hidden="true"><Icon name="play" /></span>
+      <span class="visually-hidden">Play video: {label}</span>
+    </a>
+  </div>
+)}
+
+<script>
+  import { enhanceVideos } from '../scripts/video';
+  enhanceVideos(document);
+</script>
+
+<style>
+  .video { position: relative; aspect-ratio: 16 / 9; background: #253a3a; overflow: hidden; }
+  .video :global(iframe) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-poster { position: absolute; inset: 0; display: block; color: var(--text); }
+  .video-thumb { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+  /* Our own cover photos keep their upper part in view so faces are not cropped off.
+     YouTube's fallback image stays centred: that crop trims its letterbox bars. */
+  .video-thumb-local { object-position: 50% 20%; }
+  .video-thumb-blank { display: grid; place-items: center; padding: 24px; font: 400 24px var(--font-heading); text-align: center; }
+  .video-play {
+    position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+    display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6); font-size: 36px; transition: background 0.2s;
+  }
+  .video-poster:focus-visible { outline-offset: -6px; }
+  .video-poster:hover .video-play, .video-poster:focus-visible .video-play { background: var(--green); }
+</style>

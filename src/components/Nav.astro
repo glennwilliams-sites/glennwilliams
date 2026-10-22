@@ -1,0 +1,77 @@
+---
+import Icon from './Icon.astro';
+import { content } from '../lib/content';
+import { buildNav } from '../lib/nav';
+import { navSources } from '../lib/site-nav';
+import { withBase } from '../lib/links';
+
+interface Props {
+  currentPage: string;
+}
+const { currentPage } = Astro.props;
+const items = buildNav(navSources(), currentPage);
+---
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href={withBase('')}>{content.site().name}</a>
+    <nav aria-label="Main">
+      <ul class="nav-links">
+        {items.map((item) => (
+          <li>
+            {item.variant === 'button'
+              ? <a class="btn btn-primary nav-cta" href={item.href} aria-current={item.current ? 'page' : undefined}>{item.label}</a>
+              : <a href={item.href} aria-current={item.current ? 'page' : undefined}>{item.label}</a>}
+          </li>
+        ))}
+      </ul>
+      <details class="nav-menu">
+        <summary aria-label="Menu"><Icon name="menu" /></summary>
+        <ul>
+          {items.map((item) => (
+            <li><a href={item.href} aria-current={item.current ? 'page' : undefined}>{item.label}</a></li>
+          ))}
+        </ul>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<script>
+  import { enhanceNav } from '../scripts/nav';
+  enhanceNav(document);
+</script>
+
+<style>
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--teal-deep);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    max-width: calc(var(--wide) + 2 * var(--gutter)); height: var(--nav-height); margin: 0 auto; padding: 0 var(--gutter);
+  }
+  .nav-brand { font: 400 24px/1 var(--font-heading); text-decoration: none; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+  .nav a { text-decoration: none; }
+  .nav-links a, .nav-menu a { font-size: 16px; }
+  .nav-brand, .nav-links a:not(.btn) { display: inline-flex; align-items: center; min-height: 44px; }
+  .nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+  .nav a[aria-current='page']:not(.btn) { text-decoration: underline 2px var(--lime); text-underline-offset: 6px; }
+  .nav .nav-cta { color: var(--teal-deep); }
+  .nav .nav-cta:hover { text-decoration: none; }
+  .nav-menu { display: none; position: relative; }
+  .nav-menu summary { list-style: none; cursor: pointer; font-size: 28px; display: grid; place-items: center; width: 44px; height: 44px; }
+  .nav-menu summary::-webkit-details-marker { display: none; }
+  .nav-menu ul {
+    position: absolute; right: 0; top: 100%; min-width: 200px;
+    list-style: none; margin: 0; padding: 8px 0; background: var(--teal-deep);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .nav-menu li a { display: block; padding: 12px 20px; }
+  .nav-menu a[aria-current='page'] { text-decoration: underline 2px var(--lime); text-underline-offset: 6px; }
+  @media (max-width: 899px) {
+    .nav-links { display: none; }
+    .nav-menu { display: block; }
+  }
+</style>

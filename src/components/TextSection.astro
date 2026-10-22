@@ -1,0 +1,54 @@
+---
+import { Picture } from 'astro:assets';
+import RichText from './RichText.astro';
+import { focusClass, resolvePhoto } from '../lib/images';
+import type { TextSectionData } from '../lib/schemas';
+
+interface Props {
+  data: TextSectionData;
+  /** Put the photo on the left instead of the right (wide screens). */
+  reverse?: boolean;
+}
+const { data, reverse = false } = Astro.props;
+const photo = resolvePhoto(data.photo);
+const points = data.points.filter(Boolean);
+---
+<div class:list={['text-section', { 'has-photo': photo, reverse }]}>
+  <div class="text-main">
+    {data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+    {data.heading && <h2>{data.heading}</h2>}
+    {data.body && <div class="prose"><RichText html={data.body} /></div>}
+    {points.length > 0 && <ul class="points">{points.map((point) => <li>{point}</li>)}</ul>}
+  </div>
+  {photo && (
+    <Picture
+      src={photo.image}
+      alt={photo.alt}
+      widths={[480, 960]}
+      sizes="(min-width: 900px) 480px, 100vw"
+      formats={['avif', 'webp']}
+      class={`text-photo ${focusClass(photo.focus)}`}
+    />
+  )}
+</div>
+
+<style>
+  .text-section { display: grid; gap: 40px; }
+  .text-main > h2 { font-size: var(--size-h2); margin: 0 0 24px; }
+  /* Keep lines near 70 characters even when there is no photo beside the text. */
+  .text-main .prose { max-width: 34rem; }
+  .points { list-style: none; margin: 24px 0 0; padding: 0; max-width: var(--prose); }
+  .points li { position: relative; padding: 6px 0 6px 28px; }
+  .points li::before {
+    content: '';
+    position: absolute; left: 0; top: 0.9em;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--lime);
+  }
+  .text-photo { width: 100%; height: auto; border-radius: var(--radius); }
+  @media (min-width: 900px) {
+    .has-photo { grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 64px; align-items: start; }
+    .has-photo.reverse { grid-template-columns: minmax(0, 480px) minmax(0, 1fr); }
+    .reverse .text-main { order: 2; }
+  }
+</style>

@@ -1,0 +1,41 @@
+:root {
+  --teal-deep: #00403e;
+  --teal: #0c645c;
+  --green: #7cb70b;
+  --lime: #a5f212;
+  --text: #fef9fa;
+  --text-muted: rgba(254, 249, 250, 0.78);
+  --panel: rgba(0, 0, 0, 0.18);
+  --line: rgba(254, 249, 250, 0.14);
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Sans 3', 'Source Sans Pro', Arial, sans-serif;
+
+  --wide: 1120px;
+  --prose: 720px;
+  --gutter: 24px;
+  --nav-height: 64px;
+  --slant: 72px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --section-pad: 96px;
+
+  --size-hero: 64px;
+  --size-h1: 56px;
+  --size-h2: 40px;
+  --size-h3: 24px;
+  --size-body: 18px;
+  --size-small: 15px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --gutter: 16px;
+    --slant: 40px;
+    --section-pad: 64px;
+    --size-hero: 44px;
+    --size-h1: 40px;
+    --size-h2: 30px;
+    --size-h3: 22px;
+  }
+}

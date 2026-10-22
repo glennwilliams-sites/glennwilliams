@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import Card from './Card.astro';
+import type { Agent } from '../lib/schemas';
+import { resolveImage } from '../lib/images';
+import { displayHost, linkHref, telHref } from '../lib/links';
+
+interface Props {
+  agent: Agent;
+}
+const { agent } = Astro.props;
+const logo = resolveImage(agent.logo);
+const website = displayHost(agent.website);
+const hasContact = agent.emails.length > 0 || agent.phones.length > 0 || Boolean(website);
+---
+<Card class="agent-card">
+  {logo && (
+    <span class="agent-logo">
+      <Image src={logo} alt="" height={60} class="agent-logo-img" />
+    </span>
+  )}
+  {agent.agency && <span class="eyebrow agent-agency">{agent.agency}</span>}
+  {agent.name && <h3 class="agent-name">{agent.name}</h3>}
+  {agent.role && <p class="agent-role">{agent.role}</p>}
+  {hasContact && (
+    <ul class="agent-contact">
+      {agent.phones.map((phone) => <li><a href={telHref(phone)}>{phone}</a></li>)}
+      {agent.emails.map((email) => <li><a href={`mailto:${email}`}>{email}</a></li>)}
+      {website && <li><a href={linkHref(agent.website)}>{website}</a></li>}
+    </ul>
+  )}
+</Card>
+
+<style>
+  .agent-card { padding: 28px; min-width: 0; }
+  .agent-logo {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #fff; border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 16px;
+  }
+  .agent-logo-img { height: 60px; width: auto; display: block; }
+  .agent-agency { margin-bottom: 8px; }
+  .agent-name { font-size: var(--size-h3); margin: 0; }
+  .agent-role { color: var(--text-muted); margin: 4px 0 0; }
+  .agent-contact { list-style: none; margin: 16px 0 0; padding: 0; }
+  .agent-contact a {
+    display: flex; align-items: center; min-height: 44px;
+    color: var(--text); text-decoration: underline; text-decoration-color: var(--lime); text-underline-offset: 3px;
+    overflow-wrap: anywhere;
+  }
+  .agent-contact a:hover { color: var(--lime); }
+</style>

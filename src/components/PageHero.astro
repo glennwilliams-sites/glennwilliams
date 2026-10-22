@@ -1,0 +1,80 @@
+---
+import { Picture } from 'astro:assets';
+import type { ResolvedPhoto } from '../lib/images';
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  intro?: string;
+  background?: ResolvedPhoto | null;
+}
+const { eyebrow = '', heading, intro = '', background = null } = Astro.props;
+// The photo is shown at its natural shape, at most 440px tall and never bigger than its source,
+// so a small source is not stretched. Its natural size is set here; CSS only ever shrinks it.
+const MAX_HEIGHT = 440;
+const heroSize = background
+  ? (() => {
+      const { width, height } = background.image;
+      const scale = Math.min(1, MAX_HEIGHT / height);
+      return { width: Math.round(width * scale), height: Math.round(height * scale) };
+    })()
+  : null;
+---
+<header class:list={['page-hero', { 'has-photo': background }]}>
+  <div class="page-hero-inner">
+    <div class="page-hero-text">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      <h1>{heading}</h1>
+      {intro && <p class="page-hero-intro">{intro}</p>}
+    </div>
+    {background && (
+      <div class="page-hero-photo">
+        <Picture
+          src={background.image}
+          alt={background.alt}
+          width={heroSize?.width}
+          height={heroSize?.height}
+          densities={heroSize && background.image.width >= 2 * heroSize.width ? [1, 2] : [1]}
+          formats={['avif', 'webp']}
+          class="page-hero-img"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    )}
+  </div>
+</header>
+
+<style>
+  /* The slanted edge cuts the hero's colour away to show the next band's colour behind it, so the hero
+     takes the opposite tone to the section that follows (see the :has rule below). */
+  .page-hero { position: relative; isolation: isolate; background: var(--teal); color: var(--text); }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; background: var(--teal-deep);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+  }
+  :global(main:has(> .page-hero + .tone-deep)) .page-hero { background: var(--teal-deep); }
+  :global(main:has(> .page-hero + .tone-deep)) .page-hero::before { background: var(--teal); }
+  .page-hero-inner {
+    max-width: calc(var(--wide) + 2 * var(--gutter)); margin: 0 auto;
+    padding: 96px var(--gutter) calc(var(--slant) + 48px);
+  }
+  .has-photo .page-hero-inner { display: grid; gap: 40px; align-items: center; }
+  h1 { font-size: var(--size-h1); max-width: 18ch; margin: 0 0 16px; }
+  .page-hero-intro { font-size: 22px; color: var(--text-muted); max-width: 52ch; margin: 0; }
+  .page-hero-photo { display: flex; justify-content: flex-start; min-width: 0; }
+  /* The photo keeps its own shape: only its height is limited, never its width-to-height ratio. */
+  .page-hero-photo :global(.page-hero-img) {
+    display: block; width: auto; height: auto; max-width: 100%; max-height: 300px;
+    border-radius: var(--radius);
+  }
+  @media (min-width: 900px) {
+    .has-photo .page-hero-inner { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 56px; }
+    .page-hero-photo { justify-content: flex-end; }
+    .page-hero-photo :global(.page-hero-img) { max-height: 440px; }
+  }
+  @media (max-width: 767px) {
+    .page-hero-inner { padding-top: 64px; }
+    .page-hero-intro { font-size: 19px; }
+  }
+</style>

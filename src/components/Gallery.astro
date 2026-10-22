@@ -1,0 +1,48 @@
+---
+import { Picture, getImage } from 'astro:assets';
+import { focusClass, type ResolvedPhoto } from '../lib/images';
+
+interface Props {
+  photos: ResolvedPhoto[];
+  /** Shape of the thumbnails. Square is the default; portrait (4:5) suits headshots; landscape (4:3) suits candid set photos with people at the edges. */
+  aspect?: 'square' | 'portrait' | 'landscape';
+}
+const { photos, aspect = 'square' } = Astro.props;
+const items = await Promise.all(
+  photos.map(async (photo) => ({
+    photo,
+    full: await getImage({ src: photo.image, width: Math.min(1600, photo.image.width), format: 'webp' }),
+  })),
+);
+---
+{items.length > 0 && (
+  <div class:list={['gallery', `gallery-${aspect}`]}>
+    {items.map(({ photo, full }) => (
+      <figure class="gallery-item">
+        <a href={full.src} data-lightbox data-caption={photo.title} data-description={photo.description}>
+          <Picture
+            src={photo.image}
+            alt={photo.alt || photo.title}
+            widths={[240, 480]}
+            sizes="(min-width: 1200px) 240px, 50vw"
+            formats={['avif', 'webp']}
+            class={`gallery-thumb ${focusClass(photo.focus)}`}
+          />
+        </a>
+        {photo.title && <figcaption title={photo.title}>{photo.title}</figcaption>}
+      </figure>
+    ))}
+  </div>
+)}
+
+<style>
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .gallery-item { margin: 0; min-width: 0; }
+  .gallery-thumb { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-sm); }
+  .gallery-portrait .gallery-thumb { aspect-ratio: 4 / 5; }
+  .gallery-landscape .gallery-thumb { aspect-ratio: 4 / 3; }
+  figcaption { margin-top: 12px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 479px) {
+    .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

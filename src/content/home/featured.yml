@@ -1,0 +1,13 @@
+show: true
+eyebrow: Featured work
+heading: "The Thundermans: Undercover"
+video:
+  url: https://www.youtube.com/watch?v=lp98X-9x144
+  title: "The Thundermans: Undercover official trailer (Nickelodeon)"
+  thumbnail: ""
+  start: 0
+body: |-
+  <p>Glenn was one of the puppeteers for Dr. Colosso, the evil rabbit, on Nickelodeon's <em>The Thundermans: Undercover</em> (shot 2024/25) and the movie <em>Clash of the Thundermans</em> (shot 2025/26). He has also puppeteered on FOX's <em>Animal Control</em> (seasons 1, 2 and 3). Thank you to the cast, crew and everyone at Nickelodeon: playing Dr. Colosso was "Colossome."</p>
+links:
+  - label: Puppeteering
+    url: /puppeteering/

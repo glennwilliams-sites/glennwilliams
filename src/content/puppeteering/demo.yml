@@ -1,0 +1,13 @@
+show: true
+eyebrow: Demo reel
+heading: Puppeteering demo
+video:
+  url: https://www.youtube.com/watch?v=34PAfZI3NlQ
+  title: Glenn Williams puppeteering demo reel 2023
+  thumbnail: ""
+  start: 0
+body: |-
+  <p>A short look at some of Glenn's puppeteering. On <em>The Thundermans: Undercover</em> he worked alongside fellow puppeteers Joel and Agnieszka Echallier, creators at the effects studio sfxstudio.com.</p>
+links:
+  - label: sfxstudio.com
+    url: https://www.sfxstudio.com

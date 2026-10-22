@@ -1,0 +1,54 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-padding-top: var(--nav-height); -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+body {
+  margin: 0;
+  background: var(--teal-deep);
+  color: var(--text);
+  font: 400 var(--size-body) / 1.6 var(--font-body);
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3 { font-family: var(--font-heading); font-weight: 400; line-height: 1.15; margin: 0 0 0.6em; }
+h1 { font-size: var(--size-h1); }
+h2 { font-size: var(--size-h2); }
+h3 { font-size: var(--size-h3); }
+p { margin: 0 0 1em; }
+a { color: inherit; }
+
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; }
+
+.rich-text > :last-child { margin-bottom: 0; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute; left: 8px; top: -100px; z-index: 100;
+  background: var(--text); color: var(--teal-deep); padding: 8px 12px;
+}
+.skip-link:focus { top: 8px; }
+
+.eyebrow { display: block; font: 700 var(--size-small)/1.2 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: var(--lime); margin: 0 0 12px; }
+.prose { max-width: var(--prose); }
+.prose p, .rich-text p { margin: 0 0 1em; }
+/* Paragraphs stay near 70 characters a line even inside the wider 720px prose column. */
+.prose p, .rich-text p, .rich-text li { max-width: 34rem; }
+.rich-text a:not(.btn), .prose a:not(.btn) { color: var(--text); text-decoration-color: var(--lime); text-underline-offset: 3px; }
+
+/* Face-safe photo crops: pick the part of a photo that stays in view (see focusClass in images.ts). */
+.focus-top { object-position: 50% 0%; }
+.focus-center { object-position: 50% 25%; }
+.focus-bottom { object-position: 50% 100%; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 22px; border-radius: 999px; font: 700 16px/1 var(--font-body); text-decoration: none; transition: background 0.15s, color 0.15s; }
+.btn-primary { background: var(--green); color: var(--teal-deep); }
+.btn-primary:hover { background: var(--lime); }
+.btn-secondary { border: 1px solid var(--text); color: var(--text); }
+.btn-secondary:hover { background: var(--text); color: var(--teal-deep); }
+.card { background: var(--panel); border-radius: var(--radius); padding: 24px; }

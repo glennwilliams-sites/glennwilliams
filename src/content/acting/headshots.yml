@@ -1,0 +1,56 @@
+show: true
+eyebrow: Gallery
+heading: Headshots for the 2026 season
+intro: |-
+  <p>Photographed in Vancouver by <a href="https://www.karolinaturekphotography.com">Karolina Turek Photography</a>.</p>
+photos:
+  - image: /src/assets/images/headshots/headshot-shearling-jacket-smiling.jpg
+    alt: Glenn Williams smiling in a shearling-collar jacket
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-blue-sweater.jpg
+    alt: Glenn Williams smiling in a blue sweater and tie
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-grey-turtleneck-seated.jpg
+    alt: Glenn Williams seated in a grey turtleneck
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-suit-dark-background.jpg
+    alt: Glenn Williams in a suit and tie against a dark background
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-brown-blazer-tie.jpg
+    alt: Glenn Williams smiling in a brown blazer and striped tie
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-shearling-jacket-serious.jpg
+    alt: Glenn Williams with a serious expression in a shearling-collar jacket
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-hands-on-cheeks.jpg
+    alt: Glenn Williams laughing with his hands on his cheeks
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-chin-on-hands.jpg
+    alt: Glenn Williams smiling with his chin resting on his hands
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-turtleneck-white-background.jpg
+    alt: Glenn Williams smiling in a turtleneck against a white background
+    title: ""
+    description: ""
+    focus: center
+  - image: /src/assets/images/headshots/headshot-denim-jacket.jpg
+    alt: Glenn Williams in a denim jacket against a dark background
+    title: ""
+    description: ""
+    focus: center

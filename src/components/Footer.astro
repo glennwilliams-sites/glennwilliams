@@ -1,0 +1,54 @@
+---
+import SocialLinks from './SocialLinks.astro';
+import { content } from '../lib/content';
+import { buildNav } from '../lib/nav';
+import { navSources } from '../lib/site-nav';
+import { telHref } from '../lib/links';
+
+const site = content.site();
+const phoneHref = telHref(site.phone);
+const footer = content.footer();
+const pages = buildNav(navSources(), '');
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <p class="footer-name">{site.name}</p>
+        {footer.heading && <p class="footer-heading">{footer.heading}</p>}
+      </div>
+      <nav class="footer-pages" aria-label="Pages">
+        <ul>
+          {pages.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="footer-contact">
+        {site.email && <p><a href={`mailto:${site.email}`}>{site.email}</a></p>}
+        {phoneHref && <p><a href={phoneHref}>{site.phone}</a></p>}
+        <SocialLinks socials={site.socials} email={site.email} size="small" />
+      </div>
+    </div>
+    <p class="copyright">© {year} {footer.copyright_name || site.name}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--teal-deep); border-top: 1px solid var(--line); }
+  .footer-inner { max-width: calc(var(--wide) + 2 * var(--gutter)); margin: 0 auto; padding: 48px var(--gutter) 32px; }
+  .footer-grid { display: grid; gap: 32px; }
+  .footer-name { font: 400 24px/1.2 var(--font-heading); margin: 0 0 8px; }
+  .footer-heading { color: var(--text-muted); margin: 0; }
+  .footer-pages ul { list-style: none; margin: 0; padding: 0; }
+  .footer-pages a, .footer-contact a { display: inline-flex; align-items: center; min-height: 44px; text-decoration-color: var(--lime); text-underline-offset: 3px; }
+  .footer-contact :global(.socials) { justify-content: flex-start; }
+  .footer-contact p { margin: 0 0 4px; }
+  .copyright { margin: 40px 0 0; padding-top: 24px; border-top: 1px solid var(--line); font-size: var(--size-small); color: var(--text-muted); }
+  @media (max-width: 767px) {
+    .footer-grid { gap: 16px; }
+    .footer-pages ul { display: flex; flex-wrap: wrap; column-gap: 20px; }
+  }
+  @media (min-width: 768px) {
+    .footer-grid { grid-template-columns: 1.4fr 1fr 1.4fr; }
+  }
+</style>

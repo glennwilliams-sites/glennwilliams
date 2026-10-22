@@ -1,0 +1,532 @@
+# Pages CMS (https://pagescms.org): the forms Glenn uses to edit the site.
+# Every key in src/content/*.yml must have a field here (tests/unit/pages-config.test.ts).
+media:
+  input: src/assets/images
+  output: /src/assets/images
+  extensions: [jpg, jpeg, png, webp]
+  rename: safe
+
+components:
+  photo:
+    type: object
+    label: Photo
+    fields:
+      - name: image
+        label: Photo
+        type: image
+        description: Upload a JPG or PNG. Give the file a clear name first, like "headshot-red-jacket.jpg".
+      - name: alt
+        label: Describe the photo
+        type: string
+        description: One short sentence about what's in the photo, for blind visitors and Google.
+      - name: title
+        label: Caption
+        type: string
+        description: Only shown in photo galleries, under the photo. Leave empty for no caption.
+      - name: description
+        label: Longer description
+        type: text
+        description: Only shown in photo galleries, when someone clicks the photo to see it bigger. Optional.
+      - name: focus
+        label: Keep in view when cropped
+        type: select
+        default: center
+        description: Photos are cropped to fit. Choose "Top (faces)" for photos where the face is near the top.
+        options:
+          values:
+            - { value: top, label: Top (faces) }
+            - { value: center, label: Center }
+            - { value: bottom, label: Bottom }
+  video:
+    type: object
+    label: Video
+    fields:
+      - name: url
+        label: Video link
+        type: string
+        description: Paste the link from the video's Share button on YouTube or Vimeo. Leave empty to hide the video.
+        pattern:
+          regex: '^$|^(https?://)?(www\.|m\.)?(youtube\.com|youtu\.be|youtube-nocookie\.com|vimeo\.com|player\.vimeo\.com)/\S+$'
+          message: That doesn't look like a YouTube or Vimeo link. Copy it from the video's Share button.
+      - name: title
+        label: Video name
+        type: string
+        description: 'Read out to blind visitors on the play button, e.g. "Glenn Williams acting reel 2025".'
+      - name: thumbnail
+        label: Cover photo (optional)
+        type: image
+        description: Shown before the video plays. YouTube videos use YouTube's own cover if this is empty. Vimeo videos need one.
+      - name: start
+        label: Start at (seconds)
+        type: number
+        description: Leave at 0 to play from the start. 2 minutes = 120.
+        options:
+          min: 0
+  link:
+    type: object
+    label: Link
+    fields:
+      - name: label
+        label: Link text
+        type: string
+      - name: url
+        label: Web address
+        type: string
+        description: Leave empty to hide the link.
+  credit:
+    type: object
+    label: Credit
+    fields:
+      - name: role
+        label: Role
+        type: string
+        description: e.g. Puppeteer
+      - name: production
+        label: Production
+        type: string
+      - name: director
+        label: Director
+        type: string
+        description: Optional.
+
+content:
+  - name: site
+    label: Site settings & contacts
+    type: file
+    format: yaml
+    path: src/content/site.yml
+    fields:
+      - { name: name, label: Your name, type: string }
+      - { name: seo_title, label: Title shown in Google and browser tabs, type: string }
+      - { name: seo_description, label: Description shown in Google, type: text }
+      - { name: share_image, label: Photo shown when the site is shared on social media, type: image }
+      - { name: email, label: Public email, type: string }
+      - { name: phone, label: Public phone number (leave empty to hide it), type: string }
+      - name: socials
+        label: Social links (leave empty to hide an icon)
+        type: object
+        fields:
+          - { name: facebook, label: Facebook, type: string }
+          - { name: instagram, label: Instagram, type: string }
+          - { name: x, label: X (Twitter), type: string }
+          - { name: youtube, label: YouTube, type: string }
+          - { name: imdb, label: IMDb, type: string }
+      - name: agents
+        label: Agents
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{role}: {name}'
+        description: Agents are shown on the Contact page.
+        fields:
+          - { name: role, label: Role, type: string, description: 'e.g. "Agent" or "Voice-over agent"' }
+          - { name: name, label: Name, type: string }
+          - { name: agency, label: Agency, type: string }
+          - { name: logo, label: Agency logo, type: image }
+          - { name: phones, label: Phone numbers, type: string, list: true }
+          - { name: emails, label: Emails, type: string, list: true }
+          - { name: website, label: Website, type: string }
+
+  - name: home
+    label: Home page
+    type: group
+    items:
+      - name: home-hero
+        label: 1. Top of the page
+        type: file
+        format: yaml
+        path: src/content/home/hero.yml
+        fields:
+          - { name: name, label: Your name (big heading), type: string }
+          - { name: roles, label: Roles (shown in a row above your name), type: string, list: true }
+          - { name: intro, label: Short intro, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - { name: union, label: Union line (small text under the intro), type: string }
+          - { name: photo, label: Photo, component: photo }
+          - { name: primary, label: First button, component: link }
+          - { name: secondary, label: Second button, component: link }
+      - name: home-featured
+        label: 2. Featured video
+        type: file
+        format: yaml
+        path: src/content/home/featured.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: video, label: Video, component: video }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - { name: links, label: Links (shown as buttons), component: link, list: true }
+      - name: home-tiles
+        label: 3. Page tiles
+        type: file
+        format: yaml
+        path: src/content/home/tiles.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: heading, label: Heading (optional), type: string }
+          - name: tiles
+            label: Tiles (three per row)
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{index}. {title}'
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: text, label: Short text, type: text }
+              - { name: photo, label: Photo, component: photo }
+              - { name: link, label: Where the tile goes (the whole tile is the link), component: link }
+
+  - name: acting
+    label: Acting page
+    type: group
+    items:
+      - name: acting-page
+        label: Page top (heading and photo)
+        type: file
+        format: yaml
+        path: src/content/acting/page.yml
+        fields:
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line under the heading, type: text }
+          - { name: background, label: Photo beside the heading, component: photo }
+          - { name: seo_description, label: Description shown in Google, type: text }
+
+      - name: acting-reel
+        label: 1. Acting reel
+        type: file
+        format: yaml
+        path: src/content/acting/reel.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: video, label: Video, component: video }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - { name: links, label: Links, component: link, list: true }
+      - name: acting-projects
+        label: 2. Recent projects
+        type: file
+        format: yaml
+        path: src/content/acting/projects.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - name: projects
+            label: Projects (two per row)
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{index}. {title}'
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: video, label: Video (shown instead of the photo), component: video }
+              - { name: photo, label: Photo (used when there is no video), component: photo }
+              - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+              - { name: link, label: Link under the text, component: link }
+      - name: acting-credits
+        label: 3. Credits
+        type: file
+        format: yaml
+        path: src/content/acting/credits.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: credits_title, label: Credits list title, type: string }
+          - { name: credits, label: Credits, component: credit, list: true }
+          - { name: appearances_title, label: Appearances list title, type: string }
+          - name: appearances
+            label: Other appearances
+            type: object
+            list: true
+            fields:
+              - { name: production, label: Production, type: string }
+              - { name: company, label: Company, type: string }
+          - { name: links, label: Links, component: link, list: true }
+      - name: acting-headshots
+        label: 4. Headshots
+        type: file
+        format: yaml
+        path: src/content/acting/headshots.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - name: photos
+            label: Photos
+            component: photo
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{index}. {alt}'
+
+  - name: voice-over
+    label: Voice-Over page
+    type: group
+    items:
+      - name: voice-over-page
+        label: Page top (heading and photo)
+        type: file
+        format: yaml
+        path: src/content/voice-over/page.yml
+        fields:
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line under the heading, type: text }
+          - { name: background, label: Photo beside the heading, component: photo }
+          - { name: seo_description, label: Description shown in Google, type: text }
+      - name: voice-over-section
+        label: 1. Voice-over talent
+        type: file
+        format: yaml
+        path: src/content/voice-over/voice-over.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: photo, label: Photo, component: photo }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - name: demos
+            label: Demos
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{heading}'
+            fields:
+              - { name: heading, label: Heading, type: string }
+              - { name: video, label: Video, component: video }
+              - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+
+  - name: puppeteering
+    label: Puppeteering page
+    type: group
+    items:
+      - name: puppeteering-page
+        label: Page top (heading and photo)
+        type: file
+        format: yaml
+        path: src/content/puppeteering/page.yml
+        fields:
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line under the heading, type: text }
+          - { name: background, label: Photo beside the heading, component: photo }
+          - { name: seo_description, label: Description shown in Google, type: text }
+      - name: puppeteering-intro
+        label: 1. Intro
+        type: file
+        format: yaml
+        path: src/content/puppeteering/intro.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: photo, label: Photo beside the text, component: photo }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - name: points
+            label: Short list under the text (one line each)
+            type: string
+            list: true
+      - name: puppeteering-background
+        label: 2. Background
+        type: file
+        format: yaml
+        path: src/content/puppeteering/background.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: photo, label: Photo beside the text, component: photo }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - name: points
+            label: Short list under the text (one line each)
+            type: string
+            list: true
+      - name: puppeteering-demo
+        label: 3. Demo video
+        type: file
+        format: yaml
+        path: src/content/puppeteering/demo.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: video, label: Video, component: video }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - { name: links, label: Links, component: link, list: true }
+      - name: puppeteering-videos
+        label: 4. More videos
+        type: file
+        format: yaml
+        path: src/content/puppeteering/videos.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - name: projects
+            label: Videos (two per row)
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{index}. {title}'
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: video, label: Video (shown instead of the photo), component: video }
+              - { name: photo, label: Photo (used when there is no video), component: photo }
+              - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+              - { name: link, label: Link under the text, component: link }
+      - name: puppeteering-credits
+        label: 5. Credits
+        type: file
+        format: yaml
+        path: src/content/puppeteering/credits.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: credits_title, label: Credits list title, type: string }
+          - { name: credits, label: Credits, component: credit, list: true }
+          - { name: appearances_title, label: Appearances list title, type: string }
+          - name: appearances
+            label: Other appearances
+            type: object
+            list: true
+            fields:
+              - { name: production, label: Production, type: string }
+              - { name: company, label: Company, type: string }
+          - { name: links, label: Links, component: link, list: true }
+      - name: puppeteering-photos
+        label: 6. Photo gallery
+        type: file
+        format: yaml
+        path: src/content/puppeteering/photos.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - name: photos
+            label: Photos
+            component: photo
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{index}. {title}'
+
+  - name: about
+    label: About page
+    type: group
+    items:
+      - name: about-page
+        label: Page top (heading and photo)
+        type: file
+        format: yaml
+        path: src/content/about/page.yml
+        fields:
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line under the heading, type: text }
+          - { name: background, label: Photo beside the heading, component: photo }
+          - { name: seo_description, label: Description shown in Google, type: text }
+      - name: about-bio
+        label: 1. Biography
+        type: file
+        format: yaml
+        path: src/content/about/bio.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: photo, label: Photo (leave the photo empty to hide it), component: photo }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - { name: points, label: Bullet points (optional), type: string, list: true }
+      - name: about-training
+        label: 2. Training
+        type: file
+        format: yaml
+        path: src/content/about/training.yml
+        fields:
+          - { name: show, label: Show this section, type: boolean, default: true }
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: photo, label: Photo (leave the photo empty to hide it), component: photo }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - { name: points, label: Bullet points (optional), type: string, list: true }
+
+  - name: contact
+    label: Contact page
+    type: group
+    items:
+      - name: contact-page
+        label: Page top (heading and photo)
+        type: file
+        format: yaml
+        path: src/content/contact/page.yml
+        fields:
+          - { name: eyebrow, label: Small label above the heading, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: intro, label: Intro line under the heading, type: text }
+          - { name: background, label: Photo beside the heading, component: photo }
+          - { name: seo_description, label: Description shown in Google, type: text }
+      - name: contact-info
+        label: Email, agents and profiles
+        type: file
+        format: yaml
+        path: src/content/contact/contact.yml
+        fields:
+          - { name: email_heading, label: Email and phone heading (the address and number are in Site settings), type: string }
+          - { name: email_text, label: Line under the email heading, type: text }
+          - { name: agents_heading, label: Agents heading (the agents themselves are in Site settings), type: string }
+          - { name: profiles_heading, label: Online profiles heading, type: string }
+          - name: profiles
+            label: Online profiles (one card each)
+            component: link
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{label}'
+
+  - name: ozlo
+    label: Ozlo page
+    type: group
+    items:
+      - name: ozlo-page
+        label: Ozlo the Troll
+        type: file
+        format: yaml
+        path: src/content/ozlo/ozlo.yml
+        fields:
+          - { name: show, label: Show the Ozlo page and its menu tab, type: boolean, default: false }
+          - { name: heading, label: Heading, type: string }
+          - { name: background, label: Photo beside the heading, component: photo }
+          - { name: body, label: Text, type: rich-text, options: { format: html, media: false, switcher: false } }
+          - { name: video, label: Video, component: video }
+          - { name: links, label: Links, component: link, list: true }
+          - name: photos
+            label: Photos
+            component: photo
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{index}. {title}'
+
+  - name: site-wide
+    label: Site-wide
+    type: group
+    items:
+      - name: footer
+        label: Footer
+        type: file
+        format: yaml
+        path: src/content/footer.yml
+        fields:
+          - { name: heading, label: Line under your name in the footer, type: string }
+          - { name: copyright_name, label: Name in the copyright line, type: string }

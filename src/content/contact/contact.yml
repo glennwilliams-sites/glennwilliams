@@ -1,0 +1,13 @@
+email_heading: Email or call Glenn
+email_text: The best way to reach Glenn directly.
+agents_heading: Representation
+profiles_heading: Find Glenn online
+profiles:
+  - label: IMDb
+    url: https://www.imdb.com/name/nm1491297/
+  - label: Actors Access
+    url: https://resumes.actorsaccess.com/GlennWilliams
+  - label: YouTube
+    url: https://www.youtube.com/@glennrwilliams
+  - label: Workbook
+    url: https://glennwilliams.workbooklive.com/

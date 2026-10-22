@@ -1,0 +1,6 @@
+---
+import { linkHref } from '../lib/links';
+interface Props { href: string; variant?: 'primary' | 'secondary' }
+const { href, variant = 'primary' } = Astro.props;
+---
+{href && <a class:list={['btn', `btn-${variant}`]} href={linkHref(href)}><slot /></a>}

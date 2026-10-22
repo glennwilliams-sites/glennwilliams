@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import TextSection from '../../components/TextSection.astro';
+import Button from '../../components/Button.astro';
+import { content } from '../../lib/content';
+import { resolvePhoto } from '../../lib/images';
+
+const page = content.aboutPage();
+const bio = content.aboutBio();
+const training = content.aboutTraining();
+---
+<BaseLayout title={page.heading} description={page.seo_description} currentPage="about">
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} background={resolvePhoto(page.background)} />
+
+  {bio.show && (
+    <Section id="bio" tone="deep">
+      <TextSection data={bio} reverse />
+    </Section>
+  )}
+
+  {training.show && (
+    <Section id="training" tone="teal">
+      <TextSection data={training} />
+    </Section>
+  )}
+
+  <Section id="next" tone="deep" width="prose">
+    <div class="next">
+      <p class="next-line">Want to see more, or work together?</p>
+      <div class="next-buttons">
+        <Button href={'/acting/'} variant="primary">See my acting</Button>
+        <Button href={'/contact/'} variant="secondary">Get in touch</Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .next { text-align: center; }
+  .next-line { font: 400 var(--size-h3)/1.3 var(--font-heading); margin: 0 auto 24px; }
+  .next-buttons { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+</style>

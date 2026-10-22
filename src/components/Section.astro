@@ -1,0 +1,12 @@
+---
+interface Props {
+  id?: string;
+  tone?: 'deep' | 'teal';
+  width?: 'prose' | 'wide';
+  class?: string;
+}
+const { id, tone = 'teal', width = 'wide', class: className } = Astro.props;
+---
+<section id={id} class:list={['section', `tone-${tone}`, className]}>
+  <div class:list={['section-inner', { prose: width === 'prose' }]}><slot /></div>
+</section>

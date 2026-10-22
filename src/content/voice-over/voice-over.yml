@@ -1,0 +1,37 @@
+show: true
+eyebrow: ""
+heading: Voice-over talent
+photo:
+  image: ""
+  alt: ""
+  title: ""
+  description: ""
+  focus: center
+body: |-
+  <p>Years of ventriloquism, finding a different voice for every puppet, made character voices one of Glenn's specialties. His demos below cover commercials, animation, and TV and radio. AI cannot give the personal, emotional and natural sound of a human voice: Glenn won't sound robotic, and he follows a director's direction to find the feelings AI cannot achieve.</p>
+  <p>Recently, Glenn voiced the Pillsbury Doughboy during shooting of the 2024 commercial campaign. To arrange an audition, contact his voice-over agent, Melanie Eng, through the <a href="/contact/">Contact page</a>.</p>
+demos:
+  - heading: Commercial demo
+    video:
+      url: https://www.youtube.com/watch?v=lwy2bemRapI
+      title: Glenn Williams commercial voice-over demo
+      thumbnail: ""
+      start: 0
+    body: |-
+      <p>Glenn brings fun, creativity and just the right amount of enthusiasm to a commercial read. He highlights what your product does in a way that speaks to your audience.</p>
+  - heading: Animation demo
+    video:
+      url: https://www.youtube.com/watch?v=ktRld__io9w
+      title: Glenn Williams character voices demo
+      thumbnail: ""
+      start: 0
+    body: |-
+      <p>This demo showcases Glenn's character voices for animation.</p>
+  - heading: TV and radio demo
+    video:
+      url: https://www.youtube.com/watch?v=eiVkW3GDEmE
+      title: Glenn Williams TV and radio voice-over demo
+      thumbnail: ""
+      start: 0
+    body: |-
+      <p>An announcer often gives viewers their first word of an upcoming show, film, event or documentary. Glenn brings clarity, excitement and professionalism to every script, and takes the time to make sure it's polished.</p>

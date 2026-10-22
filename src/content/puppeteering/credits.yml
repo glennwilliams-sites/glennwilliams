@@ -1,0 +1,73 @@
+show: true
+eyebrow: Credits
+heading: Puppeteering credits
+credits_title: ""
+credits:
+  - role: Puppeteer
+    production: "Land of Tomorrow (in production)"
+    director: ""
+  - role: Dr. Colosso
+    production: "Clash of the Thundermans (2026)"
+    director: ""
+  - role: Dr. Colosso
+    production: "The Thundermans: Undercover (2025)"
+    director: ""
+  - role: Puppeteer
+    production: "Animal Control (2023-24)"
+    director: ""
+  - role: Puppeteer
+    production: "Sacred Lies (2020)"
+    director: ""
+  - role: Puppeteer
+    production: "Limetown (2019)"
+    director: ""
+  - role: Puppeteer
+    production: "Gabby Duran & The Unsittables (2019)"
+    director: ""
+  - role: Puppeteer
+    production: "The Twilight Zone (2019)"
+    director: ""
+  - role: Master Puppeteer
+    production: "Critters: A New Binge (2019)"
+    director: "Jordan Rubin"
+  - role: Puppeteer
+    production: "The X-Files (2018)"
+    director: ""
+  - role: Head Puppeteer
+    production: "Tomorrowland (2015)"
+    director: ""
+  - role: Performance Puppeteer
+    production: "Strange Calls (2015)"
+    director: ""
+  - role: Standby Puppeteer
+    production: "Wayward Pines (2015)"
+    director: ""
+  - role: Puppeteer
+    production: "Tales from the Darkside (2015)"
+    director: ""
+  - role: Puppeteer
+    production: "Bedbugs: A Musical Love Story (2014)"
+    director: ""
+  - role: Puppeteer
+    production: "Smallville (2010)"
+    director: ""
+  - role: Puppeteer
+    production: "Brand New Cherry Flavor (Ep. 103)"
+    director: ""
+  - role: Puppeteer
+    production: "Supernatural"
+    director: ""
+  - role: Puppeteer
+    production: 'Pepsi "The Encounter" (internet ad)'
+    director: ""
+  - role: Puppeteer
+    production: 'Fisher-Price Linkimals "Circle of Life"'
+    director: ""
+  - role: Puppeteer
+    production: "Look Up (short)"
+    director: ""
+appearances_title: ""
+appearances: []
+links:
+  - label: IMDb
+    url: https://www.imdb.com/name/nm1491297/

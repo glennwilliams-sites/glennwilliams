@@ -1,0 +1,21 @@
+show: true
+eyebrow: More video
+heading: On set
+projects:
+  - title: Animal Control
+    video:
+      url: https://www.youtube.com/watch?v=TKpxnEIO6I8
+      title: Glenn Williams puppeteer demo, Animal Control
+      thumbnail: ""
+      start: 0
+    photo:
+      image: ""
+      alt: ""
+      title: ""
+      description: ""
+      focus: center
+    body: |-
+      <p>Glenn puppeteered animals created by SFX Studio for <em>Animal Control</em>, the FOX Entertainment TV series. No real animals were hurt or asked to do anything hard: the puppeteers did it.</p>
+    link:
+      label: ""
+      url: ""

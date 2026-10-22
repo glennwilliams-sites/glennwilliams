@@ -1,0 +1,84 @@
+---
+import { Picture } from 'astro:assets';
+import Button from './Button.astro';
+import RichText from './RichText.astro';
+import { content } from '../lib/content';
+import { focusClass, resolvePhoto } from '../lib/images';
+import type { HomeHeroData } from '../lib/schemas';
+
+interface Props {
+  data: HomeHeroData;
+  /** Colour of the section that follows. The slanted edge cuts away to show it. */
+  next?: 'deep' | 'teal';
+}
+const { data, next = 'deep' } = Astro.props;
+const photo = resolvePhoto(data.photo);
+const name = data.name || content.site().name;
+const roles = data.roles.filter(Boolean).join(' · ');
+const buttons = [
+  { link: data.primary, variant: 'primary' as const },
+  { link: data.secondary, variant: 'secondary' as const },
+].filter(({ link }) => link.url);
+---
+<header class:list={['home-hero', `next-${next}`]}>
+  <div class="home-hero-shape">
+    <div class:list={['home-hero-inner', { 'has-photo': photo }]}>
+      {photo && (
+        <div class="home-photo-wrap">
+          <Picture
+            src={photo.image}
+            alt={photo.alt}
+            widths={[400, 800]}
+            sizes="(min-width: 900px) 400px, 100vw"
+            formats={['avif', 'webp']}
+            class={`home-photo ${focusClass(photo.focus)}`}
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+      )}
+      <div class="home-text">
+        {roles && <span class="eyebrow">{roles}</span>}
+        <h1 class="home-name">{name}</h1>
+        <RichText html={data.intro} class="home-intro" />
+        {data.union && <p class="home-union">{data.union}</p>}
+        {buttons.length > 0 && (
+          <div class="home-buttons">
+            {buttons.map(({ link, variant }) => <Button href={link.url} variant={variant}>{link.label || link.url}</Button>)}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* The slanted edge removes the bottom-right corner of the deep band; the next section's colour shows behind it. */
+  .home-hero { background: var(--teal-deep); }
+  .home-hero.next-teal { background: var(--teal); }
+  .home-hero-shape {
+    background: var(--teal-deep); color: var(--text);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--slant)), 0 100%);
+  }
+  .home-hero-inner {
+    display: grid; gap: 32px; align-items: center;
+    max-width: calc(var(--wide) + 2 * var(--gutter)); margin: 0 auto;
+    padding: 48px var(--gutter) calc(var(--slant) + 40px);
+  }
+  .home-photo { width: 100%; height: auto; max-height: 420px; object-fit: cover; border-radius: var(--radius); }
+  .home-name { font-size: var(--size-hero); margin: 0 0 20px; }
+  .home-text :global(.home-intro) { font-size: 20px; color: var(--text-muted); max-width: 36rem; }
+  .home-union { font-size: var(--size-small); color: var(--text-muted); margin: 16px 0 0; }
+  .home-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  /* On a phone the photo must not push the name below the fold. */
+  @media (max-width: 767px) {
+    .home-photo { max-height: 280px; }
+  }
+  @media (min-width: 900px) {
+    .home-hero-inner { padding-top: 72px; align-items: center; }
+    .home-hero-inner.has-photo { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 64px; }
+    /* Text on the left, photo on the right; the photo comes first in the markup so it leads on a phone. */
+    .home-hero-inner.has-photo .home-photo-wrap { order: 2; }
+    .home-photo { max-height: 560px; }
+  }
+</style>

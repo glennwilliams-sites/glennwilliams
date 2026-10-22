@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import TextSection from '../../components/TextSection.astro';
+import Video from '../../components/Video.astro';
+import RichText from '../../components/RichText.astro';
+import LinkList from '../../components/LinkList.astro';
+import CreditsBlock from '../../components/CreditsBlock.astro';
+import Gallery from '../../components/Gallery.astro';
+import ProjectCards from '../../components/ProjectCards.astro';
+import { content } from '../../lib/content';
+import { resolvePhoto, resolvePhotos } from '../../lib/images';
+import { parseVideoUrl } from '../../lib/video';
+
+const page = content.puppeteeringPage();
+const intro = content.puppeteeringIntro();
+const background = content.puppeteeringBackground();
+const demo = content.puppeteeringDemo();
+const videos = content.puppeteeringVideos();
+const credits = content.puppeteeringCredits();
+const photos = content.puppeteeringPhotos();
+
+// A section with show on but nothing to display would be an empty padded band.
+const demoLinks = demo.links.filter((link) => link.url);
+const showDemo = demo.show && Boolean(demo.eyebrow || demo.heading || demo.body || parseVideoUrl(demo.video.url) || demoLinks.length > 0);
+const showBackground = background.show && Boolean(background.eyebrow || background.heading || background.body || resolvePhoto(background.photo) || background.points.some(Boolean));
+const showVideos = videos.show && Boolean(videos.eyebrow || videos.heading || videos.projects.length > 0);
+---
+<BaseLayout title={page.heading} description={page.seo_description} currentPage="puppeteering">
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} background={resolvePhoto(page.background)} />
+
+  {intro.show && (
+    <Section id="intro" tone="deep">
+      <TextSection data={intro} />
+    </Section>
+  )}
+
+  {showBackground && (
+    <Section id="background" tone="teal">
+      <TextSection data={background} />
+    </Section>
+  )}
+
+  {showDemo && (
+    <Section id="demo" tone="deep">
+      {demo.eyebrow && <span class="eyebrow">{demo.eyebrow}</span>}
+      {demo.heading && <h2>{demo.heading}</h2>}
+      <Video video={demo.video} />
+      {(demo.body || demoLinks.length > 0) && (
+        <div class="prose demo-text">
+          <RichText html={demo.body} />
+          <LinkList links={demo.links} align="left" />
+        </div>
+      )}
+    </Section>
+  )}
+
+  {showVideos && (
+    <Section id="videos" tone="teal">
+      {videos.eyebrow && <span class="eyebrow">{videos.eyebrow}</span>}
+      {videos.heading && <h2>{videos.heading}</h2>}
+      <ProjectCards data={videos} />
+    </Section>
+  )}
+
+  {credits.show && (
+    <Section id="credits" tone="deep">
+      <CreditsBlock data={credits} />
+    </Section>
+  )}
+
+  {photos.show && (
+    <Section id="photos" tone="teal">
+      {photos.eyebrow && <span class="eyebrow">{photos.eyebrow}</span>}
+      {photos.heading && <h2>{photos.heading}</h2>}
+      {photos.intro && <div class="prose photos-intro"><RichText html={photos.intro} /></div>}
+      <Gallery photos={resolvePhotos(photos.photos)} aspect="landscape" />
+    </Section>
+  )}
+</BaseLayout>
+
+<style>
+  .demo-text { margin-top: 32px; max-width: 38rem; }
+  .photos-intro { margin-bottom: 32px; }
+</style>

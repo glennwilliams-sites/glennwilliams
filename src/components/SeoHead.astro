@@ -1,0 +1,52 @@
+---
+import { getImage } from 'astro:assets';
+import { content } from '../lib/content';
+import { resolveImage } from '../lib/images';
+import { linkHref, telHref } from '../lib/links';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const site = content.site();
+const roles = content.homeHero().roles;
+const title = Astro.props.title ? `${Astro.props.title} | ${site.name}` : site.seo_title || site.name;
+const description = Astro.props.description || site.seo_description;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const homeUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
+
+const shareSource = resolveImage(site.share_image);
+const share = shareSource
+  ? await getImage({ src: shareSource, width: 1200, height: 630, fit: 'cover', position: 'attention', format: 'jpg' })
+  : null;
+const shareUrl = share ? new URL(share.src, Astro.site).href : '';
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: homeUrl,
+  email: site.email ? `mailto:${site.email}` : undefined,
+  telephone: telHref(site.phone).replace('tel:', '') || undefined,
+  jobTitle: roles.length ? roles : undefined,
+  image: shareUrl || undefined,
+  sameAs: Object.values(site.socials).filter(Boolean).map((url) => linkHref(url)),
+};
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+{shareUrl && (
+  <>
+    <meta property="og:image" content={shareUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+  </>
+)}
+<meta name="twitter:card" content={shareUrl ? 'summary_large_image' : 'summary'} />
+<script type="application/ld+json" set:html={JSON.stringify(person).replace(/</g, '\\u003c')} />

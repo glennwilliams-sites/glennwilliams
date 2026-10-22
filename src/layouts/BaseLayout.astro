@@ -1,0 +1,39 @@
+---
+import '@fontsource/playfair-display/400.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/source-sans-3/400.css';
+import '@fontsource/source-sans-3/400-italic.css';
+import '@fontsource/source-sans-3/700.css';
+import '@fontsource/source-sans-3/700-italic.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/sections.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Lightbox from '../components/Lightbox.astro';
+import SeoHead from '../components/SeoHead.astro';
+import { withBase } from '../lib/links';
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPage: string;
+}
+const { title, description, currentPage } = Astro.props;
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <SeoHead title={title} description={description} />
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav currentPage={currentPage} />
+    <main id="main"><slot /></main>
+    <Footer />
+    <Lightbox />
+  </body>
+</html>

@@ -1,0 +1,54 @@
+---
+import { Picture } from 'astro:assets';
+import Card from './Card.astro';
+import Button from './Button.astro';
+import RichText from './RichText.astro';
+import Video from './Video.astro';
+import { focusClass, resolvePhoto } from '../lib/images';
+import { parseVideoUrl } from '../lib/video';
+import type { ProjectsData } from '../lib/schemas';
+
+interface Props {
+  data: ProjectsData;
+}
+const projects = Astro.props.data.projects.map((project) => ({ ...project, image: resolvePhoto(project.photo) }));
+---
+{projects.length > 0 && (
+  <div class:list={['project-cards', { single: projects.length === 1 }]}>
+    {projects.map((project) => (
+      <Card class="project">
+        {parseVideoUrl(project.video.url) ? (
+          <div class="project-media"><Video video={project.video} /></div>
+        ) : project.image && (
+          <div class="project-media">
+            <Picture
+              src={project.image.image}
+              alt={project.image.alt}
+              widths={[496, 992]}
+              sizes="(min-width: 900px) 496px, 100vw"
+              formats={['avif', 'webp']}
+              class={`project-photo ${focusClass(project.image.focus)}`}
+            />
+          </div>
+        )}
+        {project.title && <h3>{project.title}</h3>}
+        <RichText html={project.body} />
+        {project.link.url && (
+          <p class="project-link"><Button href={project.link.url} variant="secondary">{project.link.label || project.link.url}</Button></p>
+        )}
+      </Card>
+    ))}
+  </div>
+)}
+
+<style>
+  .project-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-items: start; }
+  /* A lone card would fill only half the row: centre it at a readable width instead. */
+  .project-cards.single { grid-template-columns: minmax(0, 760px); justify-content: center; }
+  .project-media { border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 20px; }
+  .project-photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .project-link { margin: 20px 0 0; }
+  @media (max-width: 899px) {
+    .project-cards { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import Button from '../../components/Button.astro';
+import AgentCard from '../../components/AgentCard.astro';
+import SocialLinks from '../../components/SocialLinks.astro';
+import { content } from '../../lib/content';
+import { resolvePhoto } from '../../lib/images';
+import { displayHost, linkHref, telHref } from '../../lib/links';
+
+const page = content.contactPage();
+const info = content.contactInfo();
+const site = content.site();
+const phoneHref = telHref(site.phone);
+const profiles = info.profiles.filter((profile) => profile.url);
+const hasSocials = Object.values(site.socials).some(Boolean) || Boolean(site.email);
+---
+<BaseLayout title={page.heading} description={page.seo_description} currentPage="contact">
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} background={resolvePhoto(page.background)} />
+
+  {(site.email || phoneHref) && (
+    <Section id="email" tone="deep" width="prose">
+      <div class="email-block">
+        {info.email_heading && <h2>{info.email_heading}</h2>}
+        {info.email_text && <p>{info.email_text}</p>}
+        <div class="contact-buttons">
+          {site.email && <Button href={`mailto:${site.email}`} variant="primary"><span class="email-label">{site.email}</span></Button>}
+          {phoneHref && <Button href={phoneHref} variant="secondary">{site.phone}</Button>}
+        </div>
+      </div>
+    </Section>
+  )}
+
+  {site.agents.length > 0 && (
+    <Section id="agents" tone="teal">
+      {info.agents_heading && <h2>{info.agents_heading}</h2>}
+      <div class="agents">
+        {site.agents.map((agent) => <AgentCard agent={agent} />)}
+      </div>
+    </Section>
+  )}
+
+  {(profiles.length > 0 || hasSocials) && (
+    <Section id="profiles" tone="deep">
+      {info.profiles_heading && <h2>{info.profiles_heading}</h2>}
+      {profiles.length > 0 && (
+        <ul class="profiles">
+          {profiles.map((profile) => {
+            const host = displayHost(profile.url);
+            return (
+              <li>
+                <a class="card profile-card" href={linkHref(profile.url)}>
+                  <span class="profile-label">{profile.label || host}</span>
+                  {host && <span class="profile-host">{host}</span>}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      <div class="profile-socials"><SocialLinks socials={site.socials} email={site.email} size="large" /></div>
+    </Section>
+  )}
+</BaseLayout>
+
+<style>
+  .email-block { text-align: center; }
+  .email-block h2 { margin-bottom: 12px; }
+  .email-block p { color: var(--text-muted); margin: 0 auto 28px; }
+  .contact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .email-block :global(.btn) { min-height: 64px; padding: 0 36px; font-size: 22px; max-width: 100%; }
+  .email-label { overflow-wrap: anywhere; }
+
+  .agents { display: grid; gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; margin-top: 32px; }
+
+  .profiles { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .profile-card {
+    display: flex; flex-direction: column; justify-content: center; gap: 4px;
+    min-height: 88px; height: 100%; text-decoration: none; color: var(--text);
+    transition: background 0.15s;
+  }
+  .profile-card:hover { background: rgba(0, 0, 0, 0.3); }
+  .profile-label { font: 400 22px/1.2 var(--font-heading); }
+  .profile-host { font-size: var(--size-small); color: var(--text-muted); overflow-wrap: anywhere; }
+  .profile-socials { margin-top: 40px; }
+  /* The email icon is a tap target: make every icon at least 44px. */
+  .profile-socials :global(.socials a) { width: 44px; height: 44px; font-size: 28px; }
+
+  @media (max-width: 899px) {
+    .agents { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

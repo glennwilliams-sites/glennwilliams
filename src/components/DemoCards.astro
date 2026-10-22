@@ -1,0 +1,31 @@
+---
+import Card from './Card.astro';
+import RichText from './RichText.astro';
+import Video from './Video.astro';
+import type { VoiceOverData } from '../lib/schemas';
+
+interface Props {
+  demos: VoiceOverData['demos'];
+}
+const { demos } = Astro.props;
+---
+{demos.length > 0 && (
+  <div class="demo-cards">
+    {demos.map((demo) => (
+      <Card class="demo">
+        <div class="demo-media"><Video video={demo.video} /></div>
+        {demo.heading && <h3>{demo.heading}</h3>}
+        <RichText html={demo.body} />
+      </Card>
+    ))}
+  </div>
+)}
+
+<style>
+  .demo-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-items: start; }
+  .demo-media { border-radius: var(--radius-sm); overflow: hidden; }
+  .demo-media:not(:empty) { margin-bottom: 20px; }
+  @media (max-width: 899px) {
+    .demo-cards { grid-template-columns: 1fr; }
+  }
+</style>

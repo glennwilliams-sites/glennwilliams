@@ -1,0 +1,102 @@
+show: true
+eyebrow: Behind the scenes
+heading: Puppeteering photos
+intro: |-
+  <p>Photos from Glenn's puppeteering work on film and television.</p>
+photos:
+  - image: /src/assets/images/puppeteering/dr-colosso-rabbit.jpg
+    alt: "Glenn on set with the Dr. Colosso rabbit puppet"
+    title: "Dr. Colosso"
+    description: "The Thundermans: Undercover, TV series, 2024/25."
+  - image: /src/assets/images/puppeteering/sacred-lies-boar.jpg
+    alt: "The boar puppet from Sacred Lies with puppeteers in a forest"
+    title: "Sacred Lies: the boar"
+    description: "Glenn puppeteered this incredibly built boar at WCT Productions (the late Bill Terezakis)."
+  - image: /src/assets/images/puppeteering/typical-day-at-the-office.jpg
+    alt: "Glenn lying hidden under a wooden set platform while puppeteering"
+    title: "A typical day at the office"
+    description: "You often can't see the puppeteers, but they're there, hiding in the most obvious spots."
+  - image: /src/assets/images/puppeteering/supernatural-blue-suit-sfx.jpg
+    alt: "Glenn in a blue effects suit holding up a dummy on set"
+    title: "Supernatural: effects work"
+    description: "Glenn was a regular puppeteer on the series. Here he wears a blue suit and holds up a dummy that loses its head through effects."
+  - image: /src/assets/images/puppeteering/twilight-zone-octopus.jpg
+    alt: "Glenn lying on the floor puppeteering an octopus tentacle"
+    title: "The Twilight Zone: the octopus"
+    description: "Glenn puppeteering an octopus in the story where intelligent octopuses attack an undersea lab."
+  - image: /src/assets/images/puppeteering/gabby-duran-gerbil.jpg
+    alt: "Glenn crouched under a set puppeteering a gerbil"
+    title: "Gabby Duran and the Unsittables"
+    description: "Glenn was a regular puppeteer on the series. Here he puppeteered a gerbil that walks along and listens as a little girl tells it her problems."
+  - image: /src/assets/images/puppeteering/pepsi-little-alien.jpg
+    alt: "The little alien puppet from a Pepsi commercial, seen over Glenn's shoulder"
+    title: "Glenn and the little alien"
+    description: "Glenn puppeteered the alien's arms for this million-dollar Pepsi commercial."
+  - image: /src/assets/images/puppeteering/legends-of-tomorrow-muppet-tom.jpg
+    alt: "Glenn, centre back, with the cast and puppets of the DC's Legends of Tomorrow puppet episode"
+    title: "Tom in DC's Legends of Tomorrow"
+    description: "Glenn puppeteering Tom in the Muppet episode of DC's Legends of Tomorrow."
+  - image: /src/assets/images/puppeteering/critters-krite.jpg
+    alt: "Glenn lying in the grass beside a Krite puppet"
+    title: "A Krite from Critters: A New Binge"
+    description: "Glenn was the master puppeteer on the TV series Critters: A New Binge."
+  - image: /src/assets/images/puppeteering/animal-control-glenn-with-raccoon.jpg
+    alt: "Glenn lying on the floor grinning, with a raccoon puppet above and behind him and a puppeteer holding its lines"
+    title: "Animal Control: the raccoons"
+    description: "The drunk raccoons, at the beginning of season 2 of Animal Control on FOX."
+    focus: bottom
+  - image: /src/assets/images/puppeteering/animal-control-fox-with-glenn.jpg
+    alt: "Glenn in profile on a lawn, looking at a red fox puppet beside him"
+    title: "Animal Control: the fox"
+    description: "The fox Glenn puppeteered on Animal Control, the FOX Entertainment TV series, 2023/24."
+    focus: center
+  - image: /src/assets/images/puppeteering/gabby-duran-glenn-rigged-to-tentacles.jpg
+    alt: "Glenn in black in front of a white backdrop, rigged with lines, an octopus tentacle by his hand"
+    title: "Gabby Duran and the Unsittables: opening credits"
+    description: "Glenn hooked up to lines that move octopus tentacles for the opening credits. The tentacles were created by SFX Studio."
+    focus: center
+  - image: /src/assets/images/puppeteering/twilight-zone-octopus-glenn-inked.jpg
+    alt: "Glenn in a black plastic apron with ink spattered on his face, holding an orange octopus tentacle"
+    title: "The Twilight Zone: inked"
+    description: "\"I just got inked!\" Episode 205, The Octopus."
+    focus: top
+  - image: /src/assets/images/puppeteering/x-files-ghouli-monster-crew-selfie.jpg
+    alt: "Glenn and four crew members taking a selfie under a tent with the pale, toothy Ghouli monster"
+    title: "The X-Files: the Ghouli monster"
+    description: "With the Ghouli monster on The X-Files."
+    focus: center
+  - image: /src/assets/images/puppeteering/x-files-alien-with-blue-suit-puppeteers.jpg
+    alt: "A green-faced alien in a silver robe, arms folded, between two people in blue suits"
+    title: "The X-Files: the alien in the mirror"
+    description: "The other three arms on this alien."
+    focus: top
+  - image: /src/assets/images/puppeteering/linkimals-sloth-on-branch.jpg
+    alt: "A sloth puppet hanging from a branch in a forest, worked by a puppeteer in black, beside a bearded actor holding a spiky creature"
+    title: "Fisher-Price Linkimals: Circle of Life"
+    description: "Glenn puppeteering the sloth for an online commercial."
+    focus: center
+  - image: /src/assets/images/puppeteering/limetown-napoleon-pig-puppet.jpg
+    alt: "A pig puppet in a blue harness on a stand on a workshop table"
+    title: "Limetown: Napoleon the pig"
+    description: "Glenn hand-puppeteered this pig in a number of scenes in episode 101."
+    focus: center
+  - image: /src/assets/images/puppeteering/tomorrowland-animatronic-head.jpg
+    alt: "A charred-looking animatronic head with exposed mechanics and glass eyes on a wooden stand"
+    title: "Tomorrowland: the animatronic head"
+    description: "Glenn was head puppeteer on Disney's Tomorrowland. This animatronic head came from WCT Productions."
+    focus: center
+  - image: /src/assets/images/puppeteering/tales-from-the-darkside-grabber-hands.jpg
+    alt: "Glenn grinning between two large black clawed gloves in front of a white backdrop"
+    title: "Tales from the Darkside: grabber hands"
+    description: "The grabby grabber hands Glenn wore for an effect."
+    focus: center
+  - image: /src/assets/images/puppeteering/ventriloquist-dummy-terry.jpg
+    alt: "Young Glenn in a blue jumpsuit, seated on a stage with the ventriloquist dummy Terry in a cap and vest"
+    title: "Terry, the ventriloquist dummy"
+    description: "The dummy Glenn used in his youth, and as a child ventriloquist on Pete's Place."
+    focus: top
+  - image: /src/assets/images/puppeteering/ventriloquist-teenage-with-puppets.jpg
+    alt: "Teenage Glenn in an orange armchair with a yellow bird puppet and several ventriloquist figures"
+    title: "Ventriloquist"
+    description: "Glenn in his teenage years with some of his ventriloquist puppet characters."
+    focus: center

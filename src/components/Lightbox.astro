@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+---
+<dialog id="lightbox" class="lightbox" aria-label="Photo viewer">
+  <button class="lightbox-close" type="button" aria-label="Close"><Icon name="close" /></button>
+  <figure>
+    <img alt="" />
+    <figcaption><strong class="lightbox-caption"></strong> <span class="lightbox-description"></span></figcaption>
+  </figure>
+</dialog>
+
+<script>
+  import { enhanceLightbox } from '../scripts/lightbox';
+  enhanceLightbox(document);
+</script>
+
+<style>
+  .lightbox { border: 0; padding: 0; background: transparent; color: var(--text); max-width: 92vw; max-height: 92vh; }
+  .lightbox::backdrop { background: rgba(0, 0, 0, 0.85); }
+  .lightbox img { max-width: 92vw; max-height: 80vh; width: auto; margin: 0 auto; }
+  .lightbox figure { margin: 0; }
+  .lightbox figcaption { padding: 12px 4px; text-align: center; }
+  .lightbox-close {
+    position: fixed; top: 12px; right: 12px; width: 44px; height: 44px;
+    border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.6); color: var(--text); font-size: 24px; cursor: pointer;
+  }
+</style>

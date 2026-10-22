@@ -1,0 +1,19 @@
+# Switched off while Glenn reworks Ozlo. The YouTube video (CJz1o-C4NoE) is private
+# and ozlothetroll.com no longer exists, so both stay out until he has new links.
+show: false
+heading: OZLO the Troll
+background:
+  image: /src/assets/images/puppeteering/ozlo-with-letter.jpg
+  alt: Ozlo the Troll puppet holding a letter addressed to him
+  title: ""
+  description: ""
+body: |-
+  <p><strong>Ozlo the Troll hails from Tromsø, Norway, located in the Arctic region. Recently, he gained access to the internet in his northern forest, allowing him to learn about the modern world from people globally. As he navigates human culture, Ozlo often finds himself perplexed by various human behaviors and customs. Visit his platform to explore his intriguing experiences and read letters he has received from across the globe, showcasing diverse perspectives.</strong></p>
+  <p><strong>Created by Glenn Williams</strong></p>
+video:
+  url: ""
+  title: Ozlo the Troll
+  thumbnail: ""
+  start: 0
+links: []
+photos: []

@@ -1,0 +1,14 @@
+show: true
+eyebrow: Biography
+heading: Over 50 years in show business
+photo:
+  image: /src/assets/images/headshots/headshot-blue-sweater.jpg
+  alt: Glenn Williams smiling in a blue sweater and tie
+  title: ""
+  description: ""
+  focus: top
+body: |-
+  <p>Glenn Williams is an actor, puppeteer, voice-over artist and host with over 50 years in show business. He has appeared in numerous television shows and films as an actor and puppeteer, and he loves exploring puppeteering and his voice skills.</p>
+  <p>It started early. In Glenn's words: "When I was 7 and 8 years old I appeared as a regular Cub Scout ventriloquist kid with a puppet named Terry on the BCTV children's Saturday morning show, <em>Pete's Place</em> starring ventriloquist Peter Ralston."</p>
+  <p>Glenn has puppeteered on FOX's <em>Animal Control</em> (seasons 1, 2 and 3), and he was one of the puppeteers for Dr. Colosso on Nickelodeon's <em>The Thundermans: Undercover</em>. He has also started developing a new YouTube series, working title <em>Ozlo the Troll</em>, about a troll in Norway discovering the world.</p>
+points: []

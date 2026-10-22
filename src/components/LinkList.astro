@@ -1,0 +1,23 @@
+---
+import type { Link } from '../lib/schemas';
+import { linkHref } from '../lib/links';
+
+interface Props {
+  links: Link[];
+  align?: 'left' | 'center';
+}
+const { links, align = 'center' } = Astro.props;
+const visible = links.filter((link) => link.url);
+---
+{visible.length > 0 && (
+  <ul class:list={['link-list', `align-${align}`]}>
+    {visible.map((link) => <li><a href={linkHref(link.url)}>{link.label || link.url}</a></li>)}
+  </ul>
+)}
+
+<style>
+  .link-list { list-style: none; margin: 16px 0 0; padding: 0; }
+  .align-center { text-align: center; font-style: italic; font-size: 19px; }
+  .align-left { text-align: left; font-style: normal; font-size: var(--size-body); }
+  .link-list a { display: inline-flex; align-items: center; min-height: 44px; }
+</style>

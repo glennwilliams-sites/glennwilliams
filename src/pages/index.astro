@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import Section from '../components/Section.astro';
+import Video from '../components/Video.astro';
+import RichText from '../components/RichText.astro';
+import Button from '../components/Button.astro';
+import Tiles from '../components/Tiles.astro';
+import { content } from '../lib/content';
+import { parseVideoUrl } from '../lib/video';
+
+const hero = content.homeHero();
+const featured = content.homeFeatured();
+const tiles = content.homeTiles();
+
+const featuredLinks = featured.links.filter((link) => link.url);
+const hasVideo = Boolean(parseVideoUrl(featured.video.url));
+const hasText = Boolean(featured.eyebrow || featured.heading || featured.body || featuredLinks.length > 0);
+const showFeatured = featured.show && (hasVideo || hasText);
+---
+<BaseLayout currentPage="">
+  <HomeHero data={hero} next={showFeatured ? 'teal' : 'deep'} />
+
+  {showFeatured && (
+    <Section id="featured" tone="teal">
+      <div class:list={['featured', { 'featured-has-video': hasVideo && hasText }]}>
+        {hasVideo && <Video video={featured.video} />}
+        {hasText && (
+          <div class="featured-text">
+            {featured.eyebrow && <span class="eyebrow">{featured.eyebrow}</span>}
+            {featured.heading && <h2>{featured.heading}</h2>}
+            <RichText html={featured.body} />
+            {featuredLinks.length > 0 && (
+              <p class="featured-links">
+                {featuredLinks.map((link) => <Button href={link.url} variant="secondary">{link.label || link.url}</Button>)}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+    </Section>
+  )}
+
+  {tiles.show && tiles.tiles.length > 0 && (
+    <Section id="explore" tone="deep">
+      {tiles.heading && <h2>{tiles.heading}</h2>}
+      <Tiles data={tiles} />
+    </Section>
+  )}
+</BaseLayout>
+
+<style>
+  .featured { display: grid; gap: 40px; }
+  .featured-text > h2 { margin: 0 0 20px; }
+  .featured-links { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 0; }
+  @media (min-width: 900px) {
+    .featured-has-video { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+  }
+</style>

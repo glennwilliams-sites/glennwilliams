@@ -1,0 +1,36 @@
+show: true
+heading: Explore
+tiles:
+  - title: Acting
+    text: Acting reel, recent projects, film and TV credits, and headshots.
+    photo:
+      image: /src/assets/images/headshots/headshot-suit-dark-background.jpg
+      alt: Glenn Williams in a suit and tie against a dark background
+      title: ""
+      description: ""
+      focus: top
+    link:
+      label: See his acting
+      url: /acting/
+  - title: Voice-over
+    text: Character voices and demos for commercials, animation, and TV and radio.
+    photo:
+      image: /src/assets/images/voice-over/voice-over-mic-darkside.jpg
+      alt: Glenn recording at a studio microphone
+      title: ""
+      description: ""
+      focus: center
+    link:
+      label: Hear his demos
+      url: /voice-over/
+  - title: Puppeteering
+    text: Credits, a demo reel and photos from film and TV sets.
+    photo:
+      image: /src/assets/images/puppeteering/dr-colosso-rabbit.jpg
+      alt: Glenn on set with the Dr. Colosso rabbit puppet
+      title: ""
+      description: ""
+      focus: center
+    link:
+      label: See his puppeteering
+      url: /puppeteering/

@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import OzloPage from '../components/pages/OzloPage.astro';
+import { content } from '../lib/content';
+
+// Only Ozlo lives here now, and only while it is switched on; a switched-off page's URL falls through to 404.
+export function getStaticPaths() {
+  const pages: { params: { page: string } }[] = [];
+  if (content.ozlo().show) pages.push({ params: { page: 'ozlo' } });
+  return pages;
+}
+
+const { page } = Astro.params;
+const titles: Record<string, string> = {
+  ozlo: content.ozlo().heading || 'Ozlo',
+};
+---
+<BaseLayout title={titles[page]} currentPage={page}>
+  {page === 'ozlo' && <OzloPage />}
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+import Button from './Button.astro';
+import CreditList from './CreditList.astro';
+import type { CreditsData } from '../lib/schemas';
+
+interface Props {
+  data: CreditsData;
+}
+const { data } = Astro.props;
+const links = data.links.filter((link) => link.url);
+const hasLists = data.credits.length > 0 || data.appearances.length > 0;
+const twoColumns = data.credits.length > 0 && data.appearances.length > 0;
+---
+{data.eyebrow && <span class="eyebrow">{data.eyebrow}</span>}
+{data.heading && <h2>{data.heading}</h2>}
+{hasLists && (
+  <div class:list={['credits-columns', { 'credits-two': twoColumns }]}>
+    <CreditList
+      title={data.credits_title}
+      credits={data.credits}
+      appearancesTitle={data.appearances_title}
+      appearances={data.appearances}
+    />
+  </div>
+)}
+{links.length > 0 && (
+  <p class="credits-links">
+    {links.map((link) => <Button href={link.url} variant="secondary">{link.label || link.url}</Button>)}
+  </p>
+)}
+
+<style>
+  .credits-columns { display: grid; gap: 40px; }
+  .credits-links { display: flex; flex-wrap: wrap; gap: 12px; margin: 40px 0 0; }
+  @media (min-width: 900px) {
+    .credits-two { grid-template-columns: 3fr 2fr; gap: 0 64px; align-items: start; }
+    /* Each list spans a title row and a list row. The rows are shared, so the two lists
+       start at the same height even when only one of them has a title. */
+    .credits-two > :global(.credits), .credits-two > :global(.appearances) {
+      display: grid; grid-row: span 2; grid-template-rows: subgrid; align-content: start;
+    }
+    .credits-two :global(.credits-title) { grid-row: 1; }
+    .credits-two :global(.credit-list), .credits-two :global(.appearance-list) { grid-row: 2; }
+  }
+</style>

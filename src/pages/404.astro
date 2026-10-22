@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import { withBase } from '../lib/links';
+---
+<BaseLayout title="Page not found" currentPage="404">
+  <PageHero heading="Page not found" intro="Sorry, that page isn't here. It may have moved, or the link may be mistyped." />
+  <Section tone="teal" width="prose">
+    <Button href={withBase('')}>Go to the homepage</Button>
+  </Section>
+</BaseLayout>

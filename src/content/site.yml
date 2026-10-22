@@ -1,0 +1,32 @@
+name: Glenn Williams
+seo_title: Glenn Williams | Puppeteer, Actor, Ventriloquist
+seo_description: Glenn Williams is a Vancouver actor, puppeteer, ventriloquist, voice-over artist and host with over 50 years in show business.
+share_image: /src/assets/images/headshots/headshot-blue-sweater.jpg
+email: glenn@glennwilliams.ca
+phone: 1.604.834.6956
+socials:
+  facebook: ""
+  instagram: ""
+  x: ""
+  youtube: https://www.youtube.com/@glennrwilliams
+  imdb: https://www.imdb.com/name/nm1491297/
+agents:
+  - role: Agent
+    name: Brenda Wong
+    agency: MVM Agency
+    logo: /src/assets/images/site/mvm-agency-logo.png
+    phones:
+      - 1.604.318.8104
+      - 1.604.687.0388
+    emails:
+      - brenda@mvmagency.ca
+      - info.mvmagency@gmail.com
+    website: https://mvmagency.ca
+  - role: Voice-over agent
+    name: Melanie Eng
+    agency: MVM Agency
+    logo: /src/assets/images/site/mvm-agency-logo.png
+    phones:
+      - 1.604.687.0388
+    emails: []
+    website: ""

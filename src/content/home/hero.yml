@@ -1,0 +1,21 @@
+name: Glenn Williams
+roles:
+  - Actor
+  - Puppeteer
+  - Voice-over
+  - Host
+intro: |-
+  <p>Glenn Williams is a Vancouver actor, puppeteer, voice-over artist and host with over 50 years in show business. He started at age 7 as a ventriloquist on BCTV's <em>Pete's Place</em>, and has since appeared in numerous television shows and films as an actor and puppeteer.</p>
+union: UBCP/ACTRA
+photo:
+  image: /src/assets/images/headshots/headshot-blue-sweater.jpg
+  alt: Glenn Williams smiling in a blue sweater and tie
+  title: ""
+  description: ""
+  focus: top
+primary:
+  label: See my acting
+  url: /acting/
+secondary:
+  label: Contact
+  url: /contact/

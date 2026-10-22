@@ -1,0 +1,69 @@
+---
+import { Picture } from 'astro:assets';
+import { focusClass, resolvePhoto } from '../lib/images';
+import { linkHref } from '../lib/links';
+import type { TilesData } from '../lib/schemas';
+
+interface Props {
+  data: TilesData;
+}
+const tiles = Astro.props.data.tiles.map((tile) => ({
+  ...tile,
+  image: resolvePhoto(tile.photo),
+  href: linkHref(tile.link.url),
+}));
+---
+{tiles.length > 0 && (
+  <div class="tiles">
+    {tiles.map((tile) => {
+      const Tag = tile.href ? 'a' : 'div';
+      return (
+        <Tag class="card tile" href={tile.href || undefined}>
+          {tile.image && (
+            <Picture
+              src={tile.image.image}
+              alt={tile.image.alt}
+              widths={[400, 800]}
+              sizes="(min-width: 900px) 360px, 100vw"
+              formats={['avif', 'webp']}
+              class={`tile-photo ${focusClass(tile.image.focus)}`}
+            />
+          )}
+          <div class="tile-body">
+            {tile.title && <h3>{tile.title}</h3>}
+            {tile.text && <p class="tile-text">{tile.text}</p>}
+            {tile.href && (
+              <p class="tile-cta">
+                {tile.link.label && <span>{tile.link.label}</span>}
+                <span aria-hidden="true" class="tile-arrow">→</span>
+              </p>
+            )}
+          </div>
+        </Tag>
+      );
+    })}
+  </div>
+)}
+
+<style>
+  .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .tile { display: flex; flex-direction: column; padding: 0; color: var(--text); text-decoration: none; }
+  .tile-photo { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius) var(--radius) 0 0; }
+  .tile-body { display: flex; flex: 1; flex-direction: column; gap: 8px; padding: 24px; }
+  .tile-body h3 { margin: 0; }
+  .tile-text { color: var(--text-muted); margin: 0; }
+  .tile-cta { display: flex; gap: 8px; align-items: center; margin: auto 0 0; padding-top: 8px; font-weight: 700; color: var(--lime); }
+  .tile-arrow { transition: translate 0.15s; }
+  .tile:hover .tile-arrow, .tile:focus-visible .tile-arrow { translate: 4px 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    a.tile { transition: transform 0.15s; }
+    a.tile:hover { transform: translateY(-2px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tile-arrow { transition: none; }
+    .tile:hover .tile-arrow, .tile:focus-visible .tile-arrow { translate: none; }
+  }
+  @media (max-width: 899px) {
+    .tiles { grid-template-columns: 1fr; }
+  }
+</style>

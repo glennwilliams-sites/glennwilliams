@@ -1,0 +1,33 @@
+---
+import PageHero from '../PageHero.astro';
+import Section from '../Section.astro';
+import RichText from '../RichText.astro';
+import LinkList from '../LinkList.astro';
+import Video from '../Video.astro';
+import Gallery from '../Gallery.astro';
+import { content } from '../../lib/content';
+import { resolvePhoto, resolvePhotos } from '../../lib/images';
+import { parseVideoUrl } from '../../lib/video';
+
+const ozlo = content.ozlo();
+const photos = resolvePhotos(ozlo.photos);
+const hasVideo = Boolean(parseVideoUrl(ozlo.video.url));
+const hasLinks = ozlo.links.some((link) => link.url);
+---
+<PageHero heading={ozlo.heading || 'Ozlo'} background={resolvePhoto(ozlo.background)} />
+{(ozlo.body || hasLinks) && (
+  <Section id="about-ozlo" tone="deep" width="prose">
+    <RichText html={ozlo.body} />
+    <LinkList links={ozlo.links} align="left" />
+  </Section>
+)}
+{(hasVideo || photos.length > 0) && (
+  <Section id="ozlo-media" tone="teal">
+    <Video video={ozlo.video} />
+    {photos.length > 0 && <div class:list={['ozlo-photos', { 'after-video': hasVideo }]}><Gallery photos={photos} /></div>}
+  </Section>
+)}
+
+<style>
+  .after-video { margin-top: 32px; }
+</style>

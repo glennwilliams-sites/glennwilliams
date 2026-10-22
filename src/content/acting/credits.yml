@@ -1,0 +1,39 @@
+show: true
+eyebrow: Resume
+heading: Credits
+credits_title: Selected credits
+credits:
+  - role: Puppeteer
+    production: "Dr. Colosso, The Thundermans: Undercover 2024/25"
+    director: Jed Spingarn
+  - role: Puppeteer
+    production: Look Up
+    director: Doug Cook
+  - role: Tom
+    production: Arrow
+    director: Leslie Belsey
+  - role: Engineer
+    production: The Christmas Train
+    director: Ron Oliver
+  - role: Dad
+    production: Walmart
+    director: Robert Stromberg
+appearances_title: Other recent appearances
+appearances:
+  - production: Tomorrowland
+    company: Disney
+  - production: Supernatural
+    company: SN15Films
+  - production: Gabby Duran and the Unsittables
+    company: Disney
+  - production: The Twilight Zone
+    company: Gravity
+  - production: DC's Legends of Tomorrow
+    company: Waverider
+  - production: The X-Files
+    company: XFilesTV Prod
+links:
+  - label: Full resume on Actors Access
+    url: https://resumes.actorsaccess.com/GlennWilliams
+  - label: IMDb
+    url: https://www.imdb.com/name/nm1491297/

@@ -1,0 +1,41 @@
+show: true
+eyebrow: Recent work
+heading: Recent projects
+projects:
+  - title: Look Up
+    video:
+      url: https://vimeo.com/834901913
+      title: Look Up, a micro-short directed by Doug Cook
+      thumbnail: /src/assets/images/recent-work/look-up-clapboard.jpg
+      start: 0
+    photo:
+      image: ""
+      alt: ""
+      title: ""
+      description: ""
+      focus: center
+    body: |-
+      <p>Glenn stars as The Puppeteer in <em>Look Up</em>, a micro-short directed by Doug Cook. It was shot in two hours at the 2023 DGC Virtual Production Workshop in Vancouver, run with Virtual Production House, W.F. White and ACTRA, where eight Canadian directors were selected to make virtual production shorts.</p>
+      <p>A wise puppeteer interrupts a pursuit of virtual validation: a metaphor for life against the pull of technology.</p>
+    link:
+      label: ""
+      url: ""
+  - title: Summer of '69 (Bryan Adams music video)
+    video:
+      url: https://www.youtube.com/watch?v=9f06QZCVUHg
+      title: Bryan Adams, Summer of '69 (official music video)
+      thumbnail: /src/assets/images/recent-work/summer-of-69-glenn-as-cop.jpg
+      start: 115
+    photo:
+      image: ""
+      alt: ""
+      title: ""
+      description: ""
+      focus: center
+    body: |-
+      <p>Fun fact: Glenn plays a police officer in the scene where musicians trespassing in a warehouse are chased down. It was filmed near the train tracks by the Clarke and 1st Avenue overpass in Vancouver.</p>
+      <p>About two minutes in, he is one of the two background cops slipping on fallen apples.</p>
+      <p>"Summer of '69" is a June 1985 single by Canadian singer <a href="https://en.wikipedia.org/wiki/Bryan_Adams">Bryan Adams</a>, from his album <em>Reckless</em>.</p>
+    link:
+      label: ""
+      url: ""

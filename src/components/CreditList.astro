@@ -1,0 +1,56 @@
+---
+import type { Appearance, Credit } from '../lib/schemas';
+
+interface Props {
+  title?: string;
+  credits: Credit[];
+  appearancesTitle?: string;
+  appearances?: Appearance[];
+}
+const { title = '', credits, appearancesTitle = '', appearances = [] } = Astro.props;
+---
+{credits.length > 0 && (
+  <div class="credits">
+    {title && <h3 class="credits-title">{title}</h3>}
+    <ul class:list={['credit-list', { 'credit-list-solo': appearances.length === 0 }]}>
+      {credits.map((c) => (
+        <li class="credit">
+          <span class="credit-role">{c.role}</span>{' '}
+          <span class="credit-production">{c.production}{c.director && ` / ${c.director}`}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+{appearances.length > 0 && (
+  <div class="appearances">
+    {appearancesTitle && <h3 class="credits-title">{appearancesTitle}</h3>}
+    <ul class="appearance-list">
+      {appearances.map((a) => <li>{a.production}{a.company && ` - ${a.company}`}</li>)}
+    </ul>
+  </div>
+)}
+
+<style>
+  .credits-title { font-size: var(--size-h3); margin: 0 0 16px; }
+  .appearance-list { list-style: none; margin: 0; padding: 0; font-size: var(--size-small); }
+  .appearance-list li + li { margin-top: 6px; }
+  /* The list is the grid and each row is a subgrid, so the role column is sized once
+     for every row and no role can run into its production. */
+  .credit-list {
+    list-style: none; margin: 0; padding: 0;
+    --role-col: 12em;
+    display: grid; grid-template-columns: var(--role-col) 1fr; column-gap: 16px;
+  }
+  .credit { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; padding: 6px 0; }
+  .credit-role { font-weight: 700; color: var(--lime); }
+  /* With no appearances beside it, a long list flows into two columns instead of one wide, sparse column. */
+  @media (min-width: 900px) {
+    .credit-list-solo { display: block; columns: 2; column-gap: 64px; }
+    .credit-list-solo .credit { break-inside: avoid; grid-template-columns: var(--role-col) 1fr; column-gap: 16px; }
+  }
+  @media (max-width: 767px) {
+    .credit-list { display: block; }
+    .credit { grid-template-columns: 1fr; margin-bottom: 6px; }
+  }
+</style>

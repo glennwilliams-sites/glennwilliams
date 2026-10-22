@@ -1,0 +1,52 @@
+---
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import RichText from '../../components/RichText.astro';
+import DemoCards from '../../components/DemoCards.astro';
+import { content } from '../../lib/content';
+import { focusClass, resolvePhoto } from '../../lib/images';
+
+const page = content.voiceOverPage();
+const voiceOver = content.voiceOver();
+const voicePhoto = resolvePhoto(voiceOver.photo);
+
+// A section with show on but nothing to display would be an empty padded band.
+const showVoiceOver = voiceOver.show && Boolean(voiceOver.eyebrow || voiceOver.heading || voiceOver.body || voicePhoto || voiceOver.demos.length > 0);
+---
+<BaseLayout title={page.heading} description={page.seo_description} currentPage="voice-over">
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} background={resolvePhoto(page.background)} />
+
+  {showVoiceOver && (
+    <Section id="voice-over" tone="teal">
+      <div class:list={['vo-intro', { 'vo-has-photo': voicePhoto }]}>
+        <div class="vo-text">
+          {voiceOver.eyebrow && <span class="eyebrow">{voiceOver.eyebrow}</span>}
+          {voiceOver.heading && <h2>{voiceOver.heading}</h2>}
+          <RichText html={voiceOver.body} />
+        </div>
+        {voicePhoto && (
+          <Picture
+            src={voicePhoto.image}
+            alt={voicePhoto.alt}
+            widths={[536, 1072]}
+            sizes="(min-width: 900px) 536px, 100vw"
+            formats={['avif', 'webp']}
+            class={`vo-photo ${focusClass(voicePhoto.focus)}`}
+          />
+        )}
+      </div>
+      <DemoCards demos={voiceOver.demos} />
+    </Section>
+  )}
+</BaseLayout>
+
+<style>
+  .vo-intro { display: grid; gap: 40px; margin-bottom: 56px; }
+  .vo-text :global(.rich-text) { max-width: var(--prose); }
+  .vo-photo { width: 100%; height: auto; border-radius: var(--radius); }
+  @media (min-width: 900px) {
+    .vo-has-photo { grid-template-columns: minmax(0, 1fr) minmax(0, 536px); gap: 56px; align-items: start; }
+  }
+</style>

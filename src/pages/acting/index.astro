@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import Video from '../../components/Video.astro';
+import RichText from '../../components/RichText.astro';
+import LinkList from '../../components/LinkList.astro';
+import ProjectCards from '../../components/ProjectCards.astro';
+import CreditsBlock from '../../components/CreditsBlock.astro';
+import Gallery from '../../components/Gallery.astro';
+import { content } from '../../lib/content';
+import { resolvePhoto, resolvePhotos } from '../../lib/images';
+import { parseVideoUrl } from '../../lib/video';
+
+const page = content.actingPage();
+const reel = content.actingReel();
+const projects = content.actingProjects();
+const credits = content.actingCredits();
+const headshots = content.actingHeadshots();
+
+// A section with show on but nothing to display would be an empty padded band.
+const reelLinks = reel.links.filter((link) => link.url);
+const showReel = reel.show && Boolean(reel.eyebrow || reel.heading || reel.body || parseVideoUrl(reel.video.url) || reelLinks.length > 0);
+const showProjects = projects.show && Boolean(projects.eyebrow || projects.heading || projects.projects.length > 0);
+---
+<BaseLayout title={page.heading} description={page.seo_description} currentPage="acting">
+  <PageHero eyebrow={page.eyebrow} heading={page.heading} intro={page.intro} background={resolvePhoto(page.background)} />
+
+  {showReel && (
+    <Section id="reel" tone="deep">
+      {reel.eyebrow && <span class="eyebrow">{reel.eyebrow}</span>}
+      {reel.heading && <h2>{reel.heading}</h2>}
+      <Video video={reel.video} />
+      {(reel.body || reelLinks.length > 0) && (
+        <div class="prose reel-text">
+          <RichText html={reel.body} />
+          <LinkList links={reel.links} align="left" />
+        </div>
+      )}
+    </Section>
+  )}
+
+  {showProjects && (
+    <Section id="projects" tone="teal">
+      {projects.eyebrow && <span class="eyebrow">{projects.eyebrow}</span>}
+      {projects.heading && <h2>{projects.heading}</h2>}
+      <ProjectCards data={projects} />
+    </Section>
+  )}
+
+  {credits.show && (
+    <Section id="credits" tone="deep">
+      <CreditsBlock data={credits} />
+    </Section>
+  )}
+
+  {headshots.show && (
+    <Section id="headshots" tone="teal">
+      {headshots.eyebrow && <span class="eyebrow">{headshots.eyebrow}</span>}
+      {headshots.heading && <h2>{headshots.heading}</h2>}
+      {headshots.intro && <div class="prose headshots-intro"><RichText html={headshots.intro} /></div>}
+      <Gallery photos={resolvePhotos(headshots.photos)} aspect="portrait" />
+    </Section>
+  )}
+</BaseLayout>
+
+<style>
+  .reel-text { margin-top: 32px; max-width: 38rem; }
+  .headshots-intro { margin-bottom: 32px; }
+</style>
